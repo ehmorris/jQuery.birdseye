@@ -7,6 +7,7 @@ To Use
 * link to birdseye.css somewhere in your &lt;head&gt;
 * place a div, section, or aside into your document with the class of .birdseye
 * on page load, call the birdseye function on the element for which you want birdseye navigation
+
     $(function() {
       $('.container').birdseye();
     });
