@@ -1,0 +1,36 @@
+.birdseye {
+  display: block;
+  float: left;
+  overflow: hidden;
+  position: fixed;
+  width: 250px;
+  z-index: 1; }
+  .birdseye #birdseye-location {
+    border-left: 20px solid rgba(255, 255, 0, 0.75);
+    display: block;
+    font-size: 100%;
+    font-weight: normal;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    width: 100%;
+    z-index: 1; }
+  .birdseye h2 {
+    border-left: 20px solid #666;
+    display: block;
+    font-size: 100%;
+    font-weight: normal;
+    margin: 0;
+    position: absolute;
+    width: 100%; }
+    .birdseye h2 a {
+      bottom: 0;
+      display: block;
+      position: absolute;
+      text-decoration: none;
+      text-indent: 1em;
+      top: 0;
+      width: 100%;
+      z-index: 2; }
+      .birdseye h2 a:hover {
+        background: #eee; }
