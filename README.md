@@ -8,8 +8,12 @@ To Use
 * place a div, section, or aside into your document with the class of .birdseye
 * on page load, call the birdseye function on the element for which you want birdseye navigation
 
-    $(function() {
-      $('.container').birdseye();
-    });
+```javascript
+$(function() {
+  $('.container').birdseye();
+});
+```
 
 Note: birdseye.css applies default styles to the .birdseye container - it sets a width, and position:fixed;
+
+Check back or "watch" for updates!
