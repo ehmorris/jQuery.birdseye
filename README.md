@@ -2,7 +2,7 @@
 
 ### About
 
-jQuery.birdseye will read a content container and create a minified, birdseye version which shows the container's children elements in a navigable list. jQuery.birdseye will display the location of the user's viewport over the current section, and the birdseye links are anchor links to their sections.
+jQuery.birdseye will read a content container and create a minified, birdseye version which shows the container's children elements in a navigable list, and the location of the user's viewport.
 
 It's ideal to use on a content area with lots of subsections, like a long quiz or a long form.
 
