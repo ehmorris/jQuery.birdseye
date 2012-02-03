@@ -131,17 +131,32 @@
       $('.birdseye').height(birdseye_elements_height);
     }
 
-    // call both viewport functions
-    function viewport() {
-      viewport_render();
-      viewport_style();
+    // change birdseye container from position fixed to position absolute and calculate
+    // its top value so it stays in view - this gets around an iOS bug with position 
+    // fixed elements which contain links
+    function make_birdseye_absolute() {
+      // set the birdseye view's initial top padding as a constant before setting it
+      // as absolute
+      // if the window loads scrolled down, then just assume 1em
+      if ($('.birdseye').css('position') == 'fixed' && window.scrollY <= 0) {
+        birdseye_constants.top_padding = $('.birdseye').offset().top;
+      } 
+      else if ($('.birdseye').css('position') == 'fixed' && window.scrollY > 0) {
+        birdseye_constants.top_padding = 16;
+      }
+      var top_value = window.scrollY + birdseye_constants.top_padding;
+      $('.birdseye').css({
+        'position': 'absolute',
+        'top': top_value
+      });
     }
 
     // run plugin
     calculate_constants();
     birdseye_render();
     birdseye_style();
-    viewport();
+    viewport_render();
+    viewport_style();
     birdseye_height();
 
     // recalculates everything on window resize
@@ -149,12 +164,31 @@
       calculate_constants();
       birdseye_render();
       birdseye_style();
-      viewport();
+      viewport_render();
+      viewport_style();
       birdseye_height();
     });
 
-    // calls viewport() every 50 milliseconds - moves the indicator smoothly
-    window.setInterval(viewport, 40);
+    // detect iPad user agent string
+    var isiPad = navigator.userAgent.match(/iPad/i) != null;
+
+    // if iPad, route around fixed position bug by absolutely positioning the birdseye 
+    // container, and changing its top value in an interval
+    if (isiPad) {
+      // calls viewport() every 50 milliseconds - moves the indicator smoothly
+      window.setInterval(function() {
+        viewport_render();
+        viewport_style();
+        make_birdseye_absolute();
+      }, 40);
+    }
+    else {
+      // calls viewport() every 50 milliseconds - moves the indicator smoothly
+      window.setInterval(function() {
+        viewport_render();
+        viewport_style();
+      }, 40);
+    }
 
     // listen for section clicks
     $('.birdseye span').live('click', function() {
