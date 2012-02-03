@@ -1,13 +1,23 @@
+@mixin box-sizing ($box) {
+//  content-box | border-box | inherit
+  -webkit-box-sizing: $box;
+     -moz-box-sizing: $box;
+      -ms-box-sizing: $box;
+       -o-box-sizing: $box;
+          box-sizing: $box;
+}
+
 .birdseye {
   display: block;
   float: left;
   overflow: hidden;
   position: fixed;
-  width: 250px;
+  width: 20%;
   z-index: 1;
 
   #birdseye-location {
     border-left: 20px solid rgba(255,255,0,.75);
+    @include box-sizing(border-box);
     display: block;
     font-size: 100%;
     font-weight: normal;
@@ -25,15 +35,17 @@
     font-weight: normal;
     margin: 0;
     position: absolute;
+    @include box-sizing(border-box);
     width: 100%;
 
     a {
       bottom: 0;
       display: block;
+      padding-left: 1em;
       position: absolute;
       text-decoration: none;
-      text-indent: 1em;
       top: 0;
+      @include box-sizing(border-box);
       width: 100%;
       z-index: 2;
 

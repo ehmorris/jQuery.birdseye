@@ -22,9 +22,9 @@ $(function() {
 
 ### Options
 
-You can currently set the child element from which birdseye will create its sections, the element which it will read for the section's title, and whether or not it should apply automatic anchor tags to sections.
+You can currently set the child element from which birdseye will create its sections, and the element which it will read for the section's title.
 
-These values currently default, respectively, to "div", "h2", and "true".
+These values currently default, respectively, to "div", "h2".
 
 Here's an example of overriding the default values:
 
@@ -32,8 +32,7 @@ Here's an example of overriding the default values:
 $(function() {
   $('.container').birdseye({
     'child_element' : 'section.class',
-    'title_element' : 'h1.title',
-    'create_id'     : false
+    'title_element' : 'h1.title'
   });
 });
 ```

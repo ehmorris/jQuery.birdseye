@@ -18,8 +18,7 @@
     // set default settings
     var settings = $.extend({
       'child_element' : 'div',
-      'title_element' : 'h2',
-      'create_id' : true
+      'title_element' : 'h2'
     }, options);
 
     // create birdseye nav from the element on which the function was called
@@ -50,34 +49,27 @@
       if ($('.birdseye').children().length) {
         $(container).children(settings.child_element).each(function(e) {
           var height = $(this).outerHeight() / birdseye_constants.divisor;
-          var dist_from_top = ($(this).offset().top - birdseye_constants.content_dist_from_top) 
+          var scrollto = $(this).offset().top;
+          var dist_from_top = (scrollto - birdseye_constants.content_dist_from_top) 
                               / birdseye_constants.divisor;
 
-          $('.birdseye span').eq(e).dataset('top', dist_from_top);
+
           $('.birdseye span').eq(e).dataset('height', height);
+          $('.birdseye span').eq(e).dataset('scrollto', scrollto);
+          $('.birdseye span').eq(e).dataset('top', dist_from_top);
         });
       }
       else {
         $(container).children(settings.child_element).each(function() {
           var title = $(this).children(settings.title_element).text();
           var height = $(this).outerHeight() / birdseye_constants.divisor;
-          var dist_from_top = ($(this).offset().top - birdseye_constants.content_dist_from_top) 
+          var scrollto = $(this).offset().top;
+          var dist_from_top = (scrollto - birdseye_constants.content_dist_from_top) 
                               / birdseye_constants.divisor;
 
-          // for anchor tag navigation, auto asign anchors / birdseye links
-          // anchors are created from hash of content child's title element
-          // if create_id setting is false, fetch already existing ids from divs
-          if (settings.create_id) {
-            var id = 'section' + title.hashCode();
-            $(this).attr('id', id);
-          }
-          else {
-            var id = $(this).attr('id');
-          }
-
           $('.birdseye').append(
-            '<span data-height="'+height+'" data-top="'+dist_from_top+'">'+
-              '<a href="#'+id+'">'+title+'</a>'+
+            '<span data-height="'+height+'" data-top="'+dist_from_top+'" data-scrollto="'+scrollto+'">'+
+              '<a href="javascript:void(0);">'+title+'</a>'+
             '</span>'
           );
         });
@@ -133,7 +125,7 @@
     // set birdseye container height so top and bottom of viewport indicator
     // clip correctly
     function birdseye_height() {
-      var birdseye_elements_height = eval($('.birdseye span:last').dataset('height')) +
+      var birdseye_elements_height = eval($('.birdseye span:last').dataset('height')) + 
                                      eval($('.birdseye span:last').dataset('top'));
 
       $('.birdseye').height(birdseye_elements_height);
@@ -163,6 +155,11 @@
 
     // calls viewport() every 50 milliseconds - moves the indicator smoothly
     window.setInterval(viewport, 40);
+
+    // listen for section clicks
+    $('.birdseye span').live('click', function() {
+      window.scrollTo(window.scrollX, $(this).dataset('scrollto'));
+    });
 
     // maintain chainability
     return this;
