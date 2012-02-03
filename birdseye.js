@@ -29,10 +29,13 @@
     // constants can change if viewport width/height are adjusted
     // call this function to recalculate constants
     function calculate_constants() {
+      // determines the birdseye container's offset from the top of the window
+      // rather than the top of the document
+      var birdseye_offset_top = $('.birdseye').offset().top - window.scrollY;
       // determines how many times smaller birdseye will be than the content container
       // fills height of view window
       birdseye_constants.divisor = $(document).height() / 
-                                   ($(window).height() - $('.birdseye').offset().top);
+                                   ($(window).height() - birdseye_offset_top);
       // store placement info on content section
       birdseye_constants.content_dist_from_top = $(container).offset().top;
       birdseye_constants.content_height = $(container).outerHeight();
@@ -157,7 +160,7 @@
     });
 
     // calls viewport() every 50 milliseconds - moves the indicator smoothly
-    window.setInterval(viewport, 50);
+    window.setInterval(viewport, 40);
 
     // maintain chainability
     return this;
