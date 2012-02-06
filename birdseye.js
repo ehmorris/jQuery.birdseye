@@ -25,7 +25,7 @@
     var container = this;
 
     // establish global object that can store constants etc.
-    birdseye_constants = new Object();
+    birdseye_constants = {};
 
     // constants can change if viewport width/height are adjusted
     // call this function to recalculate constants
