@@ -169,24 +169,40 @@
       birdseye_height();
     });
 
-    // detect iPad user agent string
-    var isiPad = navigator.userAgent.match(/iPad/i) != null;
+    // make the viewport representation draggable
+    $('#birdseye-location').draggable({
+      axis: 'y',
+      stop: function() {
+        var new_birdseye_top = parseInt($('#birdseye-location').css('top'));
+        var new_viewpport_top = (new_birdseye_top + 
+                                  (birdseye_constants.content_dist_from_top
+                                  / birdseye_constants.divisor)) 
+                                * birdseye_constants.divisor;
+        // scroll window to new position
+        window.scrollTo(window.scrollX, new_viewpport_top);
+      }
+    })
 
     // if iPad, route around fixed position bug by absolutely positioning the birdseye 
     // container, and changing its top value in an interval
-    if (isiPad) {
+    if (navigator.userAgent.match(/iPad/i) != null) {
       // calls viewport() every 50 milliseconds - moves the indicator smoothly
       window.setInterval(function() {
-        viewport_render();
-        viewport_style();
+        // disable re-rendering during dragging
+        if (!($('#birdseye-location').hasClass('ui-draggable-dragging'))) {
+          viewport_render();
+          viewport_style();
+        }
         make_birdseye_absolute();
       }, 40);
     }
     else {
       // calls viewport() every 50 milliseconds - moves the indicator smoothly
       window.setInterval(function() {
-        viewport_render();
-        viewport_style();
+        if (!($('#birdseye-location').hasClass('ui-draggable-dragging'))) {
+          viewport_render();
+          viewport_style();
+        }
       }, 40);
     }
 
